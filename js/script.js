@@ -4,6 +4,13 @@
 // Prendendo come riferimento il layout di esempio presente nell’html, stampiamo tutte le card del nostro team.
 // Utilizziamo poi gli input presenti nella pagina per permettere all’utente di aggiungere nuovi membri del team.
 
+
+//variabili per l'aggiunta nell'array
+
+//bottone
+const btnPlus = document.getElementById("addMemberButton")
+
+
 //array con oggetti(foto,nome,ruolo)
 const personal = [
     {
@@ -41,23 +48,27 @@ const personal = [
 //output in-page
 const page = document.querySelector(".team-container")
 let outputTeam = ``;
+
+
+
 //selezione elementi array
-for(let i = 0; i <personal.length; i++){
+for(let i = 0; i < personal.length; i++){
+    console.log("sei entrato nel for");
     // console.log(personal[i]);
     for(let key in personal[i]){
-        // console.log(key, personal[i][key]);
+        console.log(key, personal[i][key]);
         
         if( [key] == "nome"){
             var nomeTeam = personal[i][key];
-            console.log(nomeTeam);
+            // console.log(nomeTeam);
         }
         if( [key] == "foto"){
             var fotoTeam = personal[i][key];
-            console.log(fotoTeam);
+            // console.log(fotoTeam);
         }
         if( [key] == "ruolo"){
             var ruoloTeam = personal[i][key];
-            console.log(ruoloTeam);
+            // console.log(ruoloTeam);
         }
         //inserimento di oggetti in html
         outputTeam = `
@@ -72,12 +83,40 @@ for(let i = 0; i <personal.length; i++){
             </div>`
 
         
-        console.log(outputTeam);
+        // console.log(outputTeam);
     }
     page.innerHTML += outputTeam
 }
 
-
-
 //con dati presi dall'html creaiamo un nuovo oggetto e lo inseriemo nell'array
-//inseriamo il nuovo oggetto nell'html
+btnPlus.addEventListener("click", function(){
+    const htmlNome = document.getElementById("name").value;
+    const htmlRole = document.getElementById("role").value;
+    const htmlImage = document.getElementById("image").value;
+    
+    let newelement = 
+    {
+        "foto":htmlImage,
+        "nome":htmlNome,
+        "ruolo":htmlRole,
+    };
+    //inseriamo il nuovo oggetto nell'array
+    personal.push(newelement);
+    console.log(`Il nome è: ${htmlNome}, il suo ruolo è: ${htmlRole}, immagine di profilo: ${htmlImage} `);
+    //inseriamo il nuovo elemento nell'html
+    for(let i = 0; i < personal.length; i++){
+        console.log("sei entrato nel for");
+            outputTeam = `
+                <div class="team-card">
+                    <div class="card-image">
+                        <img src="${htmlImage}" alt="${htmlNome}"/>
+                    </div>
+                    <div class="card-text">
+                        <h3>${htmlNome}</h3>
+                        <p>${htmlRole}</p>
+                    </div>
+                </div>`;
+        }
+        page.innerHTML += outputTeam;
+    }
+)
